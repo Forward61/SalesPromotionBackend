@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freedom.sales.mapper.SalesPromotionMapper">
+  <resultMap id="BaseResultMap" type="com.freedom.sales.pojo.SalesPromotionPojo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+<!--    <result column="name" jdbcType="VARCHAR" property="name" />-->
+<!--    <result column="sex" jdbcType="INTEGER" property="sex" />-->
+<!--    <result column="medicarecard" jdbcType="VARCHAR" property="medicarecard" />-->
+<!--    <result column="credentialstype" jdbcType="VARCHAR" property="credentialstype" />-->
+<!--    <result column="credentialsno" jdbcType="VARCHAR" property="credentialsno" />-->
+<!--    <result column="phoneno" jdbcType="VARCHAR" property="phoneno" />-->
+<!--    <result column="homeaddress" jdbcType="VARCHAR" property="homeaddress" />-->
+<!--    <result column="workaddress" jdbcType="VARCHAR" property="workaddress" />-->
+<!--    <result column="doctorname" jdbcType="VARCHAR" property="doctorname" />-->
+<!--    <result column="injectdate" jdbcType="VARCHAR" property="injectdate" />-->
+  </resultMap>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_sales_promotion
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByGoodsName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_sales_promotion
+    where goodsName like  "%"#{goodsName}"%"
+  </select>
+  <select id="selectByExample" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+    select *
+    from t_sales_promotion
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+</mapper>
