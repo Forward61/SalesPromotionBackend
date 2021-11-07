@@ -22,15 +22,14 @@
   <select id="selectByGoodsName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from t_sales_promotion
-    <if test="goodsName != null">
       where goodsName like  "%"#{goodsName}"%"
-    </if>
-
+    where t.endDate >= CURDATE()
   </select>
   <select id="selectAll"  resultMap="BaseResultMap">
 
      select *
     from t_sales_promotion
+    where t.endDate >= CURDATE()
   </select>
   <insert id="insert" parameterType="com.freedom.sales.pojo.SalesPromotionPojo">
     insert into t_sales_promotion (id, goodsName, promotionPrice,
