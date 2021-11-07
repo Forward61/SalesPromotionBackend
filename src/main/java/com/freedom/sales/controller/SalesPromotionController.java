@@ -63,11 +63,11 @@ public class SalesPromotionController {
         //salesPromotionPojo.setSex(1);
         int successnum =  salesPromotionMapper.insert(salesPromotionPojo);
         if (successnum ==1){
-            System.out.println("插入成功");
+            System.out.println(salesPromotionPojo.getGoodsName()+" 插入成功");
             return  "1";
         }else {
 
-            System.out.println("插入失败");
+            System.out.println(salesPromotionPojo.getGoodsName()+" 插入失败");
             return  "1";
 
         }

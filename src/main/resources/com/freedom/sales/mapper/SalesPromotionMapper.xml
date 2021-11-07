@@ -16,19 +16,19 @@
   </resultMap>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
-    from t_sales_promotion
+    from t_sales_promotion t
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <select id="selectByGoodsName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
-    from t_sales_promotion
+    from t_sales_promotion t
       where goodsName like  "%"#{goodsName}"%"
-    where t.endDate >= CURDATE()
+    and t.endDate >= CURDATE()
   </select>
   <select id="selectAll"  resultMap="BaseResultMap">
 
      select *
-    from t_sales_promotion
+    from t_sales_promotion t
     where t.endDate >= CURDATE()
   </select>
   <insert id="insert" parameterType="com.freedom.sales.pojo.SalesPromotionPojo">
