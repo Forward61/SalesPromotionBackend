@@ -26,8 +26,8 @@ public class SalesPromotionPojo {
     private String goodsName;
     private BigDecimal promotionPrice;
     private BigDecimal originalPrice;
-    private Date beginDate;
-    private Date endDate;
+    private String beginDate;
+    private String endDate;
     private Double maxWeight;
     private String maxAmount;
     private String imageUrl;

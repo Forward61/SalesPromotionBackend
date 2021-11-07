@@ -16,10 +16,12 @@ public interface SalesPromotionMapper {
     //
     //int deleteByPrimaryKey(String id);
     //
-    //int insert(VaccinumBooking record);
+    int insert(SalesPromotionPojo record);
     //
     //int insertSelective(VaccinumBooking record);
     //
+    List<SalesPromotionPojo> selectAll();
+
     List<SalesPromotionPojo> selectByGoodsName(String  goodsName);
 
     SalesPromotionPojo selectByPrimaryKey(String id);

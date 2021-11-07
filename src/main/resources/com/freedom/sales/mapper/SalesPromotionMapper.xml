@@ -22,12 +22,24 @@
   <select id="selectByGoodsName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from t_sales_promotion
-    where goodsName like  "%"#{goodsName}"%"
-  </select>
-  <select id="selectByExample" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <if test="goodsName != null">
+      where goodsName like  "%"#{goodsName}"%"
+    </if>
 
-    select *
-    from t_sales_promotion
-    where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="selectAll"  resultMap="BaseResultMap">
+
+     select *
+    from t_sales_promotion
+  </select>
+  <insert id="insert" parameterType="com.freedom.sales.pojo.SalesPromotionPojo">
+    insert into t_sales_promotion (id, goodsName, promotionPrice,
+                                originalPrice, beginDate, endDate,
+                                maxWeight, maxAmount, createTime
+                                )
+    values (#{id,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{promotionPrice,jdbcType=DECIMAL},
+    #{originalPrice,jdbcType=VARCHAR}, #{beginDate,jdbcType=VARCHAR}, #{endDate,jdbcType=VARCHAR},
+    #{maxWeight,jdbcType=VARCHAR}, #{maxAmount,jdbcType=VARCHAR}, now()
+    )
+  </insert>
 </mapper>
