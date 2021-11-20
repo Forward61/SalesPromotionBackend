@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.freedom.sales.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.freedom.sales.pojo.UserPojo">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <!--    <result column="name" jdbcType="VARCHAR" property="name" />-->
+        <!--    <result column="sex" jdbcType="INTEGER" property="sex" />-->
+        <!--    <result column="medicarecard" jdbcType="VARCHAR" property="medicarecard" />-->
+        <!--    <result column="credentialstype" jdbcType="VARCHAR" property="credentialstype" />-->
+        <!--    <result column="credentialsno" jdbcType="VARCHAR" property="credentialsno" />-->
+        <!--    <result column="phoneno" jdbcType="VARCHAR" property="phoneno" />-->
+        <!--    <result column="homeaddress" jdbcType="VARCHAR" property="homeaddress" />-->
+        <!--    <result column="workaddress" jdbcType="VARCHAR" property="workaddress" />-->
+        <!--    <result column="doctorname" jdbcType="VARCHAR" property="doctorname" />-->
+        <!--    <result column="injectdate" jdbcType="VARCHAR" property="injectdate" />-->
+    </resultMap>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_user_wechat t
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_user_wechat t
+      where openid = #{openid,jdbcType=VARCHAR}
+  </select>
+    <select id="selectAll"  resultMap="BaseResultMap">
+
+     select *
+    from t_user_wechat t
+  </select>
+    <insert id="insert" parameterType="com.freedom.sales.pojo.SalesPromotionPojo">
+    insert into t_user_wechat (id, user_id, user_name,
+                                openid, session_key, unionid,
+                                 createTime
+                                )
+    values (#{id,jdbcType=VARCHAR}, #{user_id,jdbcType=VARCHAR}, #{user_name,jdbcType=DECIMAL},
+    #{openid,jdbcType=VARCHAR}, #{session_key,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR},
+     now()
+    )
+  </insert>
+</mapper>
