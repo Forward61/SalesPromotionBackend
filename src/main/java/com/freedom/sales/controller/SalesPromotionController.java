@@ -38,13 +38,16 @@ public class SalesPromotionController {
     @CrossOrigin(origins ="*",maxAge = 3600)
     @RequestMapping(value = "/searchAll/", method = RequestMethod.POST)
     public List<SalesPromotionPojo> searchByGoodsName() {
-
+        System.out.println("当前时间" + new Date());
+        System.out.println("查询全部商品名 " );
         return salesPromotionMapper.selectAll();
     }
 
     @CrossOrigin(origins ="*",maxAge = 3600)
     @RequestMapping(value = "/searchByGoodsName/{goodsName}", method = RequestMethod.POST)
     public List<SalesPromotionPojo> searchByGoodsName(@PathVariable String goodsName) {
+        System.out.println("当前时间" + new Date());
+        System.out.println("查询商品名 " + goodsName);
 
         return salesPromotionMapper.selectByGoodsName(goodsName);
     }
@@ -59,6 +62,7 @@ public class SalesPromotionController {
         System.out.println(ss);
         salesPromotionPojo.setId(ss + new Random().nextInt(100));
         //vaccinumBooking.setName("name"+ new Random().nextInt(100));
+        System.out.println("当前时间" + new Date());
         System.out.println("折扣价格" + salesPromotionPojo.getPromotionPrice());
         //salesPromotionPojo.setSex(1);
         int successnum =  salesPromotionMapper.insert(salesPromotionPojo);

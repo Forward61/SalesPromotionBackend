@@ -1,18 +1,21 @@
 package com.freedom.sales.controller;
 
-import com.freedom.sales.mapper.SalesPromotionMapper;
+import com.alibaba.fastjson.JSONObject;
 import com.freedom.sales.mapper.UserMapper;
+import com.freedom.sales.pojo.ResponseVos;
 import com.freedom.sales.pojo.UserPojo;
+import com.freedom.sales.pojo.WechatConfigPojo;
+import com.freedom.sales.utils.HttpClientManager;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @Author: freedom
@@ -24,8 +27,15 @@ import java.util.Random;
 public class UserController {
 
     @Autowired
+    UserPojo userPojo;
+    @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    WechatConfigPojo wechatConfigPojo;
+
+    @Autowired
+    ResponseVos responseVos;
     @GetMapping("/hello1")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
         System.out.println("当前时间" + new Date());
@@ -40,7 +50,9 @@ public class UserController {
     }
     @CrossOrigin(origins ="*",maxAge = 3600)
     @RequestMapping(value = "/searchAll/", method = RequestMethod.POST)
-    public List<UserPojo> searchByGoodsName() {
+    public List<UserPojo> searchAllUserInfo() {
+        System.out.println("当前时间" + new Date());
+        System.out.println("查询全部信息" );
 
         return userMapper.selectAll();
     }
@@ -48,20 +60,22 @@ public class UserController {
     @CrossOrigin(origins ="*",maxAge = 3600)
     @RequestMapping(value = "/searchByOpenid/{openid}", method = RequestMethod.POST)
     public UserPojo searchByOpenid(@PathVariable String openid) {
-
-        System.out.println("openid" + openid);
+        System.out.println("当前时间" + new Date());
+        System.out.println("查询 openid:" + openid);
         return  userMapper.selectByOpenid(openid);
     }
 
     @RequestMapping("/insertUserInfo")
     public String insertRecord(UserPojo userPojo){
+        System.out.println("当前时间" + new Date());
+
         //先查询Openid 是否在数据库存在,若存在,则跳过,提示存在
         UserPojo queryData = searchByOpenid(userPojo.getOpenid());
-        if (StringUtils.isEmpty(queryData.getId())){
+        if (null == queryData || StringUtils.isEmpty(queryData.getId())){
 
         }else{
             System.out.println(userPojo.getOpenid() + "已经存在,跳过添加");
-            return userPojo.getOpenid() + "已经存在,跳过添加";
+            return "0000";
         }
 
         //格式化日期时间类型为字符串
@@ -80,9 +94,69 @@ public class UserController {
         }else {
 
             System.out.println(userPojo.getOpenid()+" 插入失败");
-            return  "1";
+            return  "0";
 
         }
     }
+
+    /**
+     * 微信授权登录
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/getWechatLogin")
+    public ResponseVos getWechatLogin(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+
+        //微信公众号的APPID和APPSECRET
+        String code = request.getParameter("code");
+        String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + wechatConfigPojo.getAppId() +
+                "&secret=" + wechatConfigPojo.getSecret() +
+                "&js_code=" + code +
+                "&grant_type=authorization_code";
+        String result = HttpClientManager.getUrlData(url);
+        if (result.contains("errcode")) {
+            responseVos.setRespCode("错误code");
+            return responseVos;
+
+        }
+        Map<String, Object> data = JSONObject.parseObject(result);
+        String openid = data.get("openid").toString();
+        userPojo.setOpenid(openid);
+        String returnCode =  insertRecord(userPojo);
+
+        if ("0".equals(returnCode)) {
+            //根据场景不一样，授权成功后，在这里做一些业务逻辑的处理
+
+            responseVos.setRespCode("8888");
+            responseVos.setRespMsg("需要重新授权");
+            responseVos.setOpenId(openid);
+
+            return responseVos;
+        }
+
+        String token = data.get("session_key").toString();
+        String tokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + wechatConfigPojo.getAppId() +
+                "&secret=" + wechatConfigPojo.getSecret();
+        String tokenResult = HttpClientManager.getUrlData(tokenUrl);
+        Map<String, Object> tokenMap = JSONObject.parseObject(tokenResult);
+        responseVos.setOpenId(openid);
+
+
+        if (StringUtils.isNotEmpty((String) tokenMap.get("access_token"))) {
+            //根据场景不一样，授权成功后，在这里做一些业务逻辑的处理
+
+            responseVos.setRespCode("0000");
+            responseVos.setRespMsg("获取授权成功");
+            responseVos.setOpenId(openid);
+
+            return responseVos;
+        } else {
+            responseVos.setRespCode("9999");
+            responseVos.setRespMsg("获取授权失败");
+
+            return responseVos;
+        }
+    }
+
 
 }

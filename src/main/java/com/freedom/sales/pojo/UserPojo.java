@@ -1,11 +1,13 @@
 package com.freedom.sales.pojo;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author: freedom
  * @Date: 2021-11-20 21:42
  **/
+@Component
 @Data
 public class UserPojo {
 
