@@ -85,8 +85,7 @@ public class UserController {
         String ss = dateTimeFormatter.format(localDateTime).toString();
         System.out.println(ss);
         userPojo.setId(ss + new Random().nextInt(100));
-        //vaccinumBooking.setName("name"+ new Random().nextInt(100));
-        //salesPromotionPojo.setSex(1);
+
         int successnum =  userMapper.insert(userPojo);
         if (successnum ==1){
             System.out.println(userPojo.getOpenid()+" 插入成功");

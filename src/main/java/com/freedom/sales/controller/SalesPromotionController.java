@@ -2,6 +2,10 @@ package com.freedom.sales.controller;
 
 import com.freedom.sales.mapper.SalesPromotionMapper;
 import com.freedom.sales.pojo.SalesPromotionPojo;
+
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +22,24 @@ import java.util.Random;
  **/
 @CrossOrigin
 @RestController
+//@Slf4j
 public class SalesPromotionController {
-
+    Logger logger = LogManager.getLogger(SalesPromotionController.class);
     @Autowired
     SalesPromotionMapper salesPromotionMapper;
-
     @GetMapping("/hello")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
         System.out.println("当前时间" + new Date());
+        //log.info("我是logger info信息");
+        //log.error("我是logger error信息");
+        //log.warn("我是logger warn信息");
+        //log.debug("我是logger debug信息");
+        //log.trace("我是logger trace信息");
+        logger.info("我是logger info信息");
+        logger.error("我是logger error信息");
+        logger.warn("我是logger warn信息");
+        logger.debug("我是logger debug信息");
+        logger.trace("我是logger trace信息");
         return String.format( new Date() +"Hello %s!", name);
     }
 

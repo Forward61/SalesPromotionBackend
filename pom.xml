@@ -19,6 +19,17 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions><!-- 去掉springboot默认配置 -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 		</dependency>
 		<dependency>
@@ -33,10 +44,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-http</artifactId>
@@ -104,6 +112,12 @@
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 
@@ -124,11 +138,11 @@
 
 
 		<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>commons-logging</groupId>-->
+<!--			<artifactId>commons-logging</artifactId>-->
+<!--			<version>1.1.1</version>-->
+<!--		</dependency>-->
 
 
 		<!-- https://mvnrepository.com/artifact/net.sf.ezmorph/ezmorph -->
@@ -145,7 +159,49 @@
 			<artifactId>json-lib</artifactId>
 			<version>2.4</version>
 			<classifier>jdk15</classifier>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+		<!-- 添加日志依赖-->
+
+<!--		<dependency>-->
+<!--			<groupId> org.apache.cassandra</groupId>-->
+<!--			<artifactId>cassandra-all</artifactId>-->
+<!--			<version>0.8.1</version>-->
+
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.slf4j</groupId>-->
+<!--					<artifactId>slf4j-log4j12</artifactId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<groupId>log4j</groupId>-->
+<!--					<artifactId>log4j</artifactId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<artifactId>slf4j-api</artifactId>-->
+<!--					<groupId>org.slf4j</groupId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+
+<!--		</dependency>-->
+
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.14.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.sli4j</groupId>
+			<artifactId>sli4j-slf4j-simple</artifactId>
+			<version>2.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
