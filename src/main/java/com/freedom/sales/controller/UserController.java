@@ -7,6 +7,8 @@ import com.freedom.sales.pojo.UserPojo;
 import com.freedom.sales.pojo.WechatConfigPojo;
 import com.freedom.sales.utils.HttpClientManager;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    Logger logger = LogManager.getLogger(UserController.class);
 
     @Autowired
     UserPojo userPojo;
@@ -53,15 +56,20 @@ public class UserController {
     public List<UserPojo> searchAllUserInfo() {
         System.out.println("当前时间" + new Date());
         System.out.println("查询全部信息" );
+        logger.info("当前时间" + new Date());
+        logger.info("查询全部信息" );
 
         return userMapper.selectAll();
     }
+
 
     @CrossOrigin(origins ="*",maxAge = 3600)
     @RequestMapping(value = "/searchByOpenid/{openid}", method = RequestMethod.POST)
     public UserPojo searchByOpenid(@PathVariable String openid) {
         System.out.println("当前时间" + new Date());
         System.out.println("查询 openid:" + openid);
+        logger.info("当前时间" + new Date());
+        logger.info("查询 openid:" + openid );
         return  userMapper.selectByOpenid(openid);
     }
 
@@ -74,6 +82,8 @@ public class UserController {
         if (null == queryData || StringUtils.isEmpty(queryData.getId())){
 
         }else{
+            logger.info("当前时间" + new Date());
+            logger.info(userPojo.getOpenid() + "已经存在,跳过添加" );
             System.out.println(userPojo.getOpenid() + "已经存在,跳过添加");
             return "0000";
         }
@@ -89,10 +99,16 @@ public class UserController {
         int successnum =  userMapper.insert(userPojo);
         if (successnum ==1){
             System.out.println(userPojo.getOpenid()+" 插入成功");
+            logger.info("当前时间" + new Date());
+            logger.info(userPojo.getOpenid()+" 插入成功" );
+
             return  "1";
         }else {
 
             System.out.println(userPojo.getOpenid()+" 插入失败");
+            logger.info("当前时间" + new Date());
+            logger.info(userPojo.getOpenid()+" 插入失败");
+
             return  "0";
 
         }

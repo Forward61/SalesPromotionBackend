@@ -2,8 +2,6 @@ package com.freedom.sales.controller;
 
 import com.freedom.sales.mapper.SalesPromotionMapper;
 import com.freedom.sales.pojo.SalesPromotionPojo;
-
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @Author: freedom
@@ -50,11 +45,36 @@ public class SalesPromotionController {
         return list;
     }
     @CrossOrigin(origins ="*",maxAge = 3600)
-    @RequestMapping(value = "/searchAll/", method = RequestMethod.POST)
+    @RequestMapping(value = "//", method = RequestMethod.POST)
     public List<SalesPromotionPojo> searchByGoodsName() {
         System.out.println("当前时间" + new Date());
         System.out.println("查询全部商品名 " );
+        logger.info("当前时间" + new Date());
+        logger.info("查询全部商品名" );
+
         return salesPromotionMapper.selectAll();
+    }
+    @CrossOrigin(origins ="*",maxAge = 3600)
+    @RequestMapping(value = "/searchAll/", method = RequestMethod.POST)
+    public List<SalesPromotionPojo> searchAllGoods() {
+
+        System.out.println("当前时间" + new Date());
+        System.out.println("查询全部商品名 " );
+        return salesPromotionMapper.selectAll();
+    }
+    @CrossOrigin(origins ="*",maxAge = 3600)
+    @RequestMapping(value = "/searchPastAllGoodsInfo/", method = RequestMethod.POST)
+    public HashMap<String,ArrayList> searchPastAllGoodsInfo() {
+
+        System.out.println("当前时间" + new Date());
+        System.out.println("查询全部信息" );
+        logger.info("当前时间" + new Date());
+        logger.info("查询全部信息" );
+        HashMap goodsMap = new HashMap<String,ArrayList>();
+        goodsMap.put("salesList", salesPromotionMapper.selectAll());
+        goodsMap.put("pastsalesList", salesPromotionMapper.selectPastAll());
+
+        return goodsMap;
     }
 
     @CrossOrigin(origins ="*",maxAge = 3600)
@@ -62,10 +82,23 @@ public class SalesPromotionController {
     public List<SalesPromotionPojo> searchByGoodsName(@PathVariable String goodsName) {
         System.out.println("当前时间" + new Date());
         System.out.println("查询商品名 " + goodsName);
-
+        logger.info("当前时间" + new Date());
+        logger.info("查询商品名 " + goodsName );
         return salesPromotionMapper.selectByGoodsName(goodsName);
     }
+    @CrossOrigin(origins ="*",maxAge = 3600)
+    @RequestMapping(value = "/searchByGoodsInfo/{goodsName}", method = RequestMethod.POST)
+    public HashMap<String,ArrayList> searchByGoodsInfo(@PathVariable String goodsName) {
+        System.out.println("当前时间" + new Date());
+        System.out.println("查询商品名 " + goodsName);
+        logger.info("当前时间" + new Date());
+        logger.info("查询商品名 " + goodsName );
+        HashMap goodsMap = new HashMap<String,ArrayList>();
+        goodsMap.put("salesList", salesPromotionMapper.selectByGoodsName(goodsName));
+        goodsMap.put("pastsalesList", salesPromotionMapper.selectPastGoodsByGoodsName(goodsName));
 
+        return goodsMap;
+    }
     @RequestMapping("/sales/insertGoodsInfo")
     public String insertRecord(SalesPromotionPojo salesPromotionPojo){
         //格式化日期时间类型为字符串
@@ -82,10 +115,14 @@ public class SalesPromotionController {
         int successnum =  salesPromotionMapper.insert(salesPromotionPojo);
         if (successnum ==1){
             System.out.println(salesPromotionPojo.getGoodsName()+" 插入成功");
+            logger.info("当前时间" + new Date());
+            logger.info(" 插入成功  商品名 " + salesPromotionPojo.getGoodsName() );
             return  "1";
         }else {
 
             System.out.println(salesPromotionPojo.getGoodsName()+" 插入失败");
+            logger.info(" 插入失败  商品名 " + salesPromotionPojo.getGoodsName() );
+
             return  "1";
 
         }

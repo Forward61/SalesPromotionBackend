@@ -31,6 +31,21 @@
     from t_sales_promotion t
     where t.endDate >= CURDATE()
   </select>
+    <select id="selectPastAll" resultType="com.freedom.sales.pojo.SalesPromotionPojo">
+      select *
+    from t_sales_promotion t
+    where t.endDate
+            &lt;
+            CURDATE()
+
+    </select>
+  <select id="selectPastGoodsByGoodsName" resultType="com.freedom.sales.pojo.SalesPromotionPojo">
+    select *
+        from t_sales_promotion t
+          where goodsName like  "%"#{goodsName}"%"
+        and t.endDate &lt; CURDATE()
+
+  </select>
   <insert id="insert" parameterType="com.freedom.sales.pojo.SalesPromotionPojo">
     insert into t_sales_promotion (id, goodsName, promotionPrice,
                                 originalPrice, beginDate, endDate,

@@ -2,7 +2,6 @@ package com.freedom.sales.mapper;
 
 import com.freedom.sales.pojo.SalesPromotionPojo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,8 +22,12 @@ public interface SalesPromotionMapper {
     List<SalesPromotionPojo> selectAll();
 
     List<SalesPromotionPojo> selectByGoodsName(String  goodsName);
+    List<SalesPromotionPojo> selectPastGoodsByGoodsName(String  goodsName);
 
     SalesPromotionPojo selectByPrimaryKey(String id);
+
+
+    List<SalesPromotionPojo> selectPastAll();
 
     //int updateByExampleSelective(@Param("record") VaccinumBooking record, @Param("example") VaccinumBookingExample example);
     //

@@ -1,6 +1,5 @@
 package com.freedom.sales.mapper;
 
-import com.freedom.sales.pojo.SalesPromotionPojo;
 import com.freedom.sales.pojo.UserPojo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -20,6 +19,7 @@ public interface UserMapper {
     List<UserPojo> selectAll();
     UserPojo selectByPrimaryKey(String id);
     UserPojo selectByOpenid(String openid);
+    //List<UserPojo> selectPastAllGoods();
 
 
 }
