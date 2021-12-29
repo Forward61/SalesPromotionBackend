@@ -84,6 +84,7 @@ public class SalesPromotionController {
         System.out.println("查询商品名 " + goodsName);
         logger.info("当前时间" + new Date());
         logger.info("查询商品名 " + goodsName );
+        String __d="dd";
         return salesPromotionMapper.selectByGoodsName(goodsName);
     }
     @CrossOrigin(origins ="*",maxAge = 3600)
