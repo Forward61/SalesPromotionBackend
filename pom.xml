@@ -263,7 +263,7 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
-					<include>/Users/freedom/CodeGood/javademo/SalesPromotionBackend/SalesPromotionBackend/src/main/resources/application-${profileActive}.yml</include>
+					<include>application-${profileActive}.yml</include>
 					<include>application.yml</include>
 					<include>**/*.xml</include>
 				</includes>
