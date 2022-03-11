@@ -15,7 +15,7 @@ import java.util.*;
  * @Author: freedom
  * @Date: 2021-11-05 09:59
  **/
-@CrossOrigin
+//@CrossOrigin
 @RestController
 //@Slf4j
 public class SalesPromotionController {
@@ -54,7 +54,7 @@ public class SalesPromotionController {
 
         return salesPromotionMapper.selectAll();
     }
-    @CrossOrigin(origins ="*",maxAge = 3600)
+//    @CrossOrigin(origins ="*",maxAge = 3600)
     @RequestMapping(value = "/searchAll/", method = RequestMethod.POST)
     public List<SalesPromotionPojo> searchAllGoods() {
 
